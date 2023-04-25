@@ -3546,11 +3546,12 @@ class App extends React.Component<AppProps, AppState> {
     // remove any active selection when we start to interact with canvas
     // (mainly, we care about removing selection outside the component which
     //  would prevent our copy handling otherwise)
-
+    // 获取选中的节点
     const selection = document.getSelection();
     if (selection?.anchorNode) {
       selection.removeAllRanges();
     }
+    // 在移动设备上，鼠标
     this.maybeOpenContextMenuAfterPointerDownOnTouchDevices(event);
     this.maybeCleanupAfterMissingPointerUp(event);
 

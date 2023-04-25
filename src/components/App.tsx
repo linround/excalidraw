@@ -3750,6 +3750,11 @@ class App extends React.Component<AppProps, AppState> {
       } else {
         // open the context menu with the first touch's clientX and clientY
         // if the touch is not moving
+        // 这里延迟了500毫秒后执行
+        // 一开始的按下就会进入这里
+        // 500毫秒后执行就吃再次清除了touchTimeout
+        // 只有发生了pointermove invalidateContextMenu才会被设置为true
+        //  没有发生移动就说明时出发了上下文事件
         touchTimeout = window.setTimeout(() => {
           touchTimeout = 0;
           if (!invalidateContextMenu) {

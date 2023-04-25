@@ -535,25 +535,27 @@ class App extends React.Component<AppProps, AppState> {
       );
     }
     return (
-      <canvas
-        className="excalidraw__canvas"
-        style={{
-          width: canvasDOMWidth,
-          height: canvasDOMHeight,
-        }}
-        width={canvasWidth}
-        height={canvasHeight}
-        ref={this.handleCanvasRef}
-        onContextMenu={this.handleCanvasContextMenu}
-        onPointerDown={this.handleCanvasPointerDown}
-        onDoubleClick={this.handleCanvasDoubleClick}
-        onPointerMove={this.handleCanvasPointerMove}
-        onPointerUp={this.handleCanvasPointerUp}
-        onPointerCancel={this.removePointer}
-        onTouchMove={this.handleTouchMove}
-      >
-        {t("labels.drawingCanvas")}
-      </canvas>
+      <>
+        <canvas
+          className="excalidraw__canvas"
+          style={{
+            width: canvasDOMWidth,
+            height: canvasDOMHeight,
+          }}
+          width={canvasWidth}
+          height={canvasHeight}
+          ref={this.handleCanvasRef}
+          onContextMenu={this.handleCanvasContextMenu}
+          onPointerDown={this.handleCanvasPointerDown}
+          onDoubleClick={this.handleCanvasDoubleClick}
+          onPointerMove={this.handleCanvasPointerMove}
+          onPointerUp={this.handleCanvasPointerUp}
+          onPointerCancel={this.removePointer}
+          onTouchMove={this.handleTouchMove}
+        >
+          {t("labels.drawingCanvas")}
+        </canvas>
+      </>
     );
   }
 
@@ -1800,6 +1802,7 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   removePointer = (event: React.PointerEvent<HTMLElement> | PointerEvent) => {
+    console.log('removePointer')
     if (touchTimeout) {
       this.resetContextMenuTimer();
     }
@@ -2971,6 +2974,7 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerMove = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
+    console.log('handleCanvasPointerMove')
     this.savePointer(event.clientX, event.clientY, this.state.cursorButton);
 
     if (gesture.pointers.has(event.pointerId)) {
@@ -3395,6 +3399,7 @@ class App extends React.Component<AppProps, AppState> {
   };
   // set touch moving for mobile context menu
   private handleTouchMove = (event: React.TouchEvent<HTMLCanvasElement>) => {
+    console.log('handleTouchMove')
     invalidateContextMenu = true;
   };
 
@@ -3487,14 +3492,21 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerDown = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
+    console.log('handleCanvasPointerDown')
     // since contextMenu options are potentially evaluated on each render,
     // and an contextMenu action may depend on selection state, we must
     // close the contextMenu before we update the selection on pointerDown
     // (e.g. resetting selection)
     if (this.state.contextMenu) {
+
       this.setState({ contextMenu: null });
     }
-
+// 更新手势信息
+//     普通的点击手势，记录初始坐标点即可
+//     对于缩放手势，会计算两个点之间的
+//     初始距离 initialDistance
+//     初始缩放比例 initialScale
+//     初始中心点坐标 lastCenter
     this.updateGestureOnPointerDown(event);
 
     // if dragging element is freedraw and another pointerdown event occurs
@@ -3697,6 +3709,7 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerUp = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
+    console.log('handleCanvasPointerUp')
     this.lastPointerUp = event;
     if (this.device.isTouchScreen) {
       const scenePointer = viewportCoordsToSceneCoords(
@@ -3865,14 +3878,19 @@ class App extends React.Component<AppProps, AppState> {
   private updateGestureOnPointerDown(
     event: React.PointerEvent<HTMLCanvasElement>,
   ): void {
+    // 同步执行
+    // 设置
+    // pointerId 是一个唯一标示符合
     gesture.pointers.set(event.pointerId, {
       x: event.clientX,
       y: event.clientY,
     });
-
+    // 这里的手势是为了记录缩放手势
     if (gesture.pointers.size === 2) {
+      // 计算中心点坐标
       gesture.lastCenter = getCenter(gesture.pointers);
       gesture.initialScale = this.state.zoom.value;
+      // 根据两点坐标，计算两点之间的距离
       gesture.initialDistance = getDistance(
         Array.from(gesture.pointers.values()),
       );
@@ -6147,6 +6165,7 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasContextMenu = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
+    console.log('handleCanvasContextMenu')
     event.preventDefault();
 
     if (

@@ -85,7 +85,6 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
       document.removeEventListener("touchmove", handleTouchMove);
     };
   }, []);
-
   return (
     <Provider unstable_createStore={() => jotaiStore} scope={jotaiScope}>
       <InitializeApp langCode={langCode} theme={theme}>

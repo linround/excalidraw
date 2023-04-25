@@ -1802,7 +1802,7 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   removePointer = (event: React.PointerEvent<HTMLElement> | PointerEvent) => {
-    console.log('removePointer')
+
     if (touchTimeout) {
       this.resetContextMenuTimer();
     }
@@ -2974,7 +2974,6 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerMove = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
-    console.log('handleCanvasPointerMove')
     this.savePointer(event.clientX, event.clientY, this.state.cursorButton);
 
     if (gesture.pointers.has(event.pointerId)) {
@@ -3399,7 +3398,7 @@ class App extends React.Component<AppProps, AppState> {
   };
   // set touch moving for mobile context menu
   private handleTouchMove = (event: React.TouchEvent<HTMLCanvasElement>) => {
-    console.log('handleTouchMove')
+
     invalidateContextMenu = true;
   };
 
@@ -3492,7 +3491,6 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerDown = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
-    console.log('handleCanvasPointerDown')
     // since contextMenu options are potentially evaluated on each render,
     // and an contextMenu action may depend on selection state, we must
     // close the contextMenu before we update the selection on pointerDown
@@ -3514,6 +3512,7 @@ class App extends React.Component<AppProps, AppState> {
     // discard the freedraw element if it is very short because it is likely
     // just a spike, otherwise finalize the freedraw element when the second
     // finger is lifted
+    // 根据event.pointerType 来判断时触摸笔(pen)、手指(touch)、鼠标（mouse）
     if (
       event.pointerType === "touch" &&
       this.state.draggingElement &&
@@ -3547,6 +3546,7 @@ class App extends React.Component<AppProps, AppState> {
     // remove any active selection when we start to interact with canvas
     // (mainly, we care about removing selection outside the component which
     //  would prevent our copy handling otherwise)
+
     const selection = document.getSelection();
     if (selection?.anchorNode) {
       selection.removeAllRanges();
@@ -3709,7 +3709,6 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerUp = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
-    console.log('handleCanvasPointerUp')
     this.lastPointerUp = event;
     if (this.device.isTouchScreen) {
       const scenePointer = viewportCoordsToSceneCoords(
@@ -6165,7 +6164,6 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasContextMenu = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
-    console.log('handleCanvasContextMenu')
     event.preventDefault();
 
     if (

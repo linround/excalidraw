@@ -3589,7 +3589,8 @@ class App extends React.Component<AppProps, AppState> {
       cursorButton: "down",
     });
     this.savePointer(event.clientX, event.clientY, "down");
-
+    // canvas 滚动平移或空间拖拽
+    // 鼠标辅助键按下的时候，只是平移处理
     if (this.handleCanvasPanUsingWheelOrSpaceDrag(event)) {
       return;
     }
@@ -3793,9 +3794,21 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPanUsingWheelOrSpaceDrag = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ): boolean => {
+    // event.button
+    // 0 主按键  通常时鼠标左键
+    // 1 辅助按键 鼠标滚轮中键
+    // 2 次按键 鼠标右键
+    // 3,4浏览器的后退前进按钮
+    // document.addEventListener('mousedown',e=>{
+    //   console.log('e:',e.button)
+    // })
+
     if (
       !(
-        gesture.pointers.size <= 1 &&
+        gesture.pointers.size <= 1 && // 只有一个事件(排除移动端双指手势)
+        // 并且（鼠标中键按下 或者
+        // （按下space键后再移动左键）
+        // 或者 （启用的时查看模式））
         (event.button === POINTER_BUTTON.WHEEL ||
           (event.button === POINTER_BUTTON.MAIN && isHoldingSpace) ||
           isHandToolActive(this.state) ||

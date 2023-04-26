@@ -317,12 +317,14 @@ export const updateActiveTool = (
 };
 
 export const resetCursor = (canvas: HTMLCanvasElement | null) => {
+  console.log('resetCursor:')
   if (canvas) {
     canvas.style.cursor = "";
   }
 };
 
 export const setCursor = (canvas: HTMLCanvasElement | null, cursor: string) => {
+  console.log('cursor:',cursor)
   if (canvas) {
     canvas.style.cursor = cursor;
   }

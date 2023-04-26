@@ -3591,6 +3591,9 @@ class App extends React.Component<AppProps, AppState> {
     this.savePointer(event.clientX, event.clientY, "down");
     // canvas 滚动平移或空间拖拽
     // 鼠标辅助键按下的时候，只是平移处理
+
+    // 拖拉模式返回true
+    // 非推拉模式返回false
     if (this.handleCanvasPanUsingWheelOrSpaceDrag(event)) {
       return;
     }
@@ -3799,9 +3802,10 @@ class App extends React.Component<AppProps, AppState> {
     // 1 辅助按键 鼠标滚轮中键
     // 2 次按键 鼠标右键
     // 3,4浏览器的后退前进按钮
-    // document.addEventListener('mousedown',e=>{
-    //   console.log('e:',e.button)
-    // })
+
+
+    // 拖拉模式返回true
+    // 非推拉模式返回false
 
     if (
       !(
@@ -3894,7 +3898,7 @@ class App extends React.Component<AppProps, AppState> {
     );
     window.addEventListener(EVENT.BLUR, teardown);
     window.addEventListener(EVENT.POINTER_MOVE, onPointerMove, {
-      passive: true,
+      passive: true, // 使用passive,防止调用 preventDefault(调用会导致报错),但是可以调用stopPropagation
     });
     window.addEventListener(EVENT.POINTER_UP, teardown);
     return true;

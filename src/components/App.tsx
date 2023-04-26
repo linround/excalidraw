@@ -3551,7 +3551,7 @@ class App extends React.Component<AppProps, AppState> {
     if (selection?.anchorNode) {
       selection.removeAllRanges();
     }
-    // 在移动设备上，鼠标
+    // 在移动设备上，处理鼠标右键相关
     this.maybeOpenContextMenuAfterPointerDownOnTouchDevices(event);
     this.maybeCleanupAfterMissingPointerUp(event);
 

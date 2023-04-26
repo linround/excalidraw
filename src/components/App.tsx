@@ -3553,6 +3553,8 @@ class App extends React.Component<AppProps, AppState> {
     }
     // 在移动设备上，处理鼠标右键相关
     this.maybeOpenContextMenuAfterPointerDownOnTouchDevices(event);
+    // 这里处理一些意外情况（上下文菜单或者alter触发的时候）
+    // pointerdown之后没有发生pointerup事件
     this.maybeCleanupAfterMissingPointerUp(event);
 
     //fires only once, if pen is detected, penMode is enabled
@@ -3566,14 +3568,18 @@ class App extends React.Component<AppProps, AppState> {
       });
     }
 
+    // 对于时触碰的移动端事件
     if (
       !this.device.isTouchScreen &&
       ["pen", "touch"].includes(event.pointerType)
     ) {
+      // 标志触屏属性
       this.device = updateObject(this.device, { isTouchScreen: true });
     }
-
+    // 这个地方暂时不太明白什么时候会触发
     if (isPanning) {
+      debugger
+      alert('isPanning')
       return;
     }
 
@@ -3775,6 +3781,7 @@ class App extends React.Component<AppProps, AppState> {
     event: React.PointerEvent<HTMLCanvasElement>,
   ): void {
     if (lastPointerUp !== null) {
+      console.log('maybeCleanupAfterMissingPointerUp')
       // Unfortunately, sometimes we don't get a pointerup after a pointerdown,
       // this can happen when a contextual menu or alert is triggered. In order to avoid
       // being in a weird state, we clean up on the next pointerdown

@@ -3896,7 +3896,7 @@ class App extends React.Component<AppProps, AppState> {
         onPointerMove.flush();
       }),
     );
-    window.addEventListener(EVENT.BLUR, teardown);
+    window.addEventListener(EVENT.BLUR, teardown); // 使用这个可以监听 鼠标本来时点在页面中的，突然点击外部，页面失去焦点触发；页面是在页面中，切换浏览器tab页也会触发
     window.addEventListener(EVENT.POINTER_MOVE, onPointerMove, {
       passive: true, // 使用passive,防止调用 preventDefault(调用会导致报错),但是可以调用stopPropagation
     });

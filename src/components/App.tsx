@@ -3063,6 +3063,7 @@ class App extends React.Component<AppProps, AppState> {
 
     const scenePointer = viewportCoordsToSceneCoords(event, this.state);
     const { x: scenePointerX, y: scenePointerY } = scenePointer;
+    // console.log(scenePointer)
 
     if (
       this.state.editingLinearElement &&

@@ -439,9 +439,21 @@ export const viewportCoordsToSceneCoords = (
     scrollY: number;
   },
 ) => {
+  // 向上滚 scrollY是负的 -100
+  // 向左平移 scrollY是负的 -100
+  // 以下计算鼠标位置的逻辑：
+  // 如果图片发生了放大
+  // 整个整体的视觉绝对性会发生缩小的效果
   const x = (clientX - offsetLeft) / zoom.value - scrollX;
   const y = (clientY - offsetTop) / zoom.value - scrollY;
 
+  // console.clear()
+  // console.log('clientX,clientY',clientX,clientY)
+  // console.log('offsetLeft,offsetTop',offsetLeft,offsetTop)
+  // console.log('scrollX,scrollY',scrollX,scrollY)
+  // console.log(zoom)
+  // console.log('x,y',{x,y})
+  // 计算鼠标点再整个画布的坐标点
   return { x, y };
 };
 

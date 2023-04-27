@@ -317,14 +317,14 @@ export const updateActiveTool = (
 };
 
 export const resetCursor = (canvas: HTMLCanvasElement | null) => {
-  console.log('resetCursor:')
+  // console.log('resetCursor:')
   if (canvas) {
     canvas.style.cursor = "";
   }
 };
 
 export const setCursor = (canvas: HTMLCanvasElement | null, cursor: string) => {
-  console.log('cursor:',cursor)
+  // console.log('cursor:',cursor)
   if (canvas) {
     canvas.style.cursor = cursor;
   }
@@ -376,19 +376,28 @@ export const setCursorForShape = (
   canvas: HTMLCanvasElement | null,
   appState: AppState,
 ) => {
+  // 一下是为了设置在选择操作后的光标显示
+  // 比如图像，文字，箭头
   if (!canvas) {
     return;
   }
   if (appState.activeTool.type === "selection") {
+    // console.log('selection')
+    // 普通箭头选择
     resetCursor(canvas);
   } else if (isHandToolActive(appState)) {
+    // console.log('isHandToolActive')
+    // 拖拽
     canvas.style.cursor = CURSOR_TYPE.GRAB;
   } else if (isEraserActive(appState)) {
+    // console.log('isEraserActive')
+    // 选择橡皮擦
     setEraserCursor(canvas, appState.theme);
     // do nothing if image tool is selected which suggests there's
     // a image-preview set as the cursor
     // Ignore custom type as well and let host decide
   } else if (!["image", "custom"].includes(appState.activeTool.type)) {
+    // console.log('image, custom')
     canvas.style.cursor = CURSOR_TYPE.CROSSHAIR;
   }
 };

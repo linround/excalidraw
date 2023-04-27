@@ -2977,6 +2977,7 @@ class App extends React.Component<AppProps, AppState> {
     this.savePointer(event.clientX, event.clientY, this.state.cursorButton);
 
     if (gesture.pointers.has(event.pointerId)) {
+      // 普通点击+移动鼠标会触发
       gesture.pointers.set(event.pointerId, {
         x: event.clientX,
         y: event.clientY,
@@ -2990,6 +2991,8 @@ class App extends React.Component<AppProps, AppState> {
       initialScale &&
       gesture.initialDistance
     ) {
+      // 是一个缩放手势
+      // alert('move if 1')
       const center = getCenter(gesture.pointers);
       const deltaX = center.x - gesture.lastCenter.x;
       const deltaY = center.y - gesture.lastCenter.y;
@@ -3024,6 +3027,7 @@ class App extends React.Component<AppProps, AppState> {
       });
       this.resetShouldCacheIgnoreZoomDebounced();
     } else {
+      // alert('清空缩放手势')
       gesture.lastCenter =
         gesture.initialDistance =
         gesture.initialScale =
@@ -3036,6 +3040,7 @@ class App extends React.Component<AppProps, AppState> {
       isDraggingScrollBar ||
       isHandToolActive(this.state)
     ) {
+      // 开启的是拖拽模式
       return;
     }
 
@@ -3045,10 +3050,13 @@ class App extends React.Component<AppProps, AppState> {
       event.clientY - this.state.offsetTop,
     );
     const isOverScrollBar = isPointerOverScrollBars.isOverEither;
+    // console.log('isOverScrollBar:',isOverScrollBar)
     if (!this.state.draggingElement && !this.state.multiElement) {
       if (isOverScrollBar) {
+
         resetCursor(this.canvas);
       } else {
+        // console.log('setCursorForShape')
         setCursorForShape(this.canvas, this.state);
       }
     }
@@ -3639,24 +3647,31 @@ class App extends React.Component<AppProps, AppState> {
       this.state.activeTool.type === "selection" ||
       this.state.activeTool.type === "text" ||
       this.state.activeTool.type === "image";
-
+    // 这里的触发条件暂不清晰
     if (!allowOnPointerDown) {
+      alert('allowOnPointerDown')
       return;
     }
 
     if (this.state.activeTool.type === "text") {
+      // alert('allowOnPointerDown text')
+      // 绘制text时的逻辑
       this.handleTextOnPointerDown(event, pointerDownState);
       return;
     } else if (
       this.state.activeTool.type === "arrow" ||
       this.state.activeTool.type === "line"
     ) {
+      // alert('allowOnPointerDown line || arrow')
+      // 选择绘制箭头或者直线时的处理
       this.handleLinearElementOnPointerDown(
         event,
         this.state.activeTool.type,
         pointerDownState,
       );
     } else if (this.state.activeTool.type === "image") {
+      // alert('allowOnPointerDown image')
+      // 选择图片后的光标点击操作
       // reset image preview on pointerdown
       setCursor(this.canvas, CURSOR_TYPE.CROSSHAIR);
 
@@ -3682,23 +3697,28 @@ class App extends React.Component<AppProps, AppState> {
         y,
       });
     } else if (this.state.activeTool.type === "freedraw") {
+      // alert('allowOnPointerDown freedraw')
+      // 自由绘画时是的鼠标canvas光标形式
       this.handleFreeDrawElementOnPointerDown(
         event,
         this.state.activeTool.type,
         pointerDownState,
       );
     } else if (this.state.activeTool.type === "custom") {
+      alert('allowOnPointerDown custom')
       setCursor(this.canvas, CURSOR_TYPE.AUTO);
     } else if (
       this.state.activeTool.type !== "eraser" &&
       this.state.activeTool.type !== "hand"
     ) {
+
+      // alert('allowOnPointerDown !eraser && !hand')
+      // 正常的运行状态
       this.createGenericElementOnPointerDown(
         this.state.activeTool.type,
         pointerDownState,
       );
     }
-
     this.props?.onPointerDown?.(this.state.activeTool, pointerDownState);
 
     const onPointerMove =

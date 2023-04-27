@@ -13,7 +13,7 @@ import {
 } from "./constants";
 import { FontFamilyValues, FontString } from "./element/types";
 import { AppState, DataURL, LastActiveTool, Zoom } from "./types";
-import { unstable_batchedUpdates } from "react-dom";
+import { unstable_batchedUpdates } from "react-dom"; // react18自动批处理数据更新，
 import { SHAPES } from "./shapes";
 import { isEraserActive, isHandToolActive } from "./appState";
 import { ResolutionType } from "./utility-types";

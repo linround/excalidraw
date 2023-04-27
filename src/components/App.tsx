@@ -3592,22 +3592,29 @@ class App extends React.Component<AppProps, AppState> {
     // canvas 滚动平移或空间拖拽
     // 鼠标辅助键按下的时候，只是平移处理
 
-    // 拖拉模式返回true
+    // 拖拉模式返回true  鼠标中键按钮 按住space和左键
     // 非推拉模式返回false
     if (this.handleCanvasPanUsingWheelOrSpaceDrag(event)) {
       return;
     }
 
     // only handle left mouse button or touch
+    // 0 主按键  通常时鼠标左键
+    // 1 辅助按键 鼠标滚轮中键
+    // 2 次按键 鼠标右键
+    // 3,4浏览器的后退前进按钮
     if (
       event.button !== POINTER_BUTTON.MAIN &&
       event.button !== POINTER_BUTTON.TOUCH
     ) {
+      //
+      // alert('非主键 且 不是touch 比如鼠标左键')
       return;
     }
 
     // don't select while panning
     if (gesture.pointers.size > 1) {
+      // alert('双指按钮，缩放')
       return;
     }
 

@@ -3061,6 +3061,7 @@ class App extends React.Component<AppProps, AppState> {
       }
     }
 
+    // 这里计算的是视觉坐标
     const scenePointer = viewportCoordsToSceneCoords(event, this.state);
     const { x: scenePointerX, y: scenePointerY } = scenePointer;
     // console.log(scenePointer)
@@ -3069,6 +3070,7 @@ class App extends React.Component<AppProps, AppState> {
       this.state.editingLinearElement &&
       !this.state.editingLinearElement.isDragging
     ) {
+      alert('!editingLinearElement.isDragging')
       const editingLinearElement = LinearElementEditor.handlePointerMove(
         event,
         scenePointerX,
@@ -3100,6 +3102,10 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     if (isBindingElementType(this.state.activeTool.type)) {
+      // 是一个妥拖拽工具
+      // console.log('isBindingElementType')
+      // 即执行线条元素绑定
+      // 这里只有在使用箭头线条的时候才会执行
       // Hovering with a selected tool or creating new linear element via click
       // and point
       const { draggingElement } = this.state;

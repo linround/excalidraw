@@ -2974,6 +2974,7 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerMove = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
+
     this.savePointer(event.clientX, event.clientY, this.state.cursorButton);
 
     if (gesture.pointers.has(event.pointerId)) {
@@ -3121,6 +3122,8 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     if (this.state.multiElement) {
+      //
+      alert('multiElement')
       const { multiElement } = this.state;
       const { x: rx, y: ry } = multiElement;
 
@@ -3204,7 +3207,7 @@ class App extends React.Component<AppProps, AppState> {
 
       return;
     }
-
+    //
     const hasDeselectedButton = Boolean(event.buttons);
     if (
       hasDeselectedButton ||
@@ -3212,12 +3215,41 @@ class App extends React.Component<AppProps, AppState> {
         this.state.activeTool.type !== "text" &&
         this.state.activeTool.type !== "eraser")
     ) {
+      // 普通的pointermove事件
+      // 或非橡皮擦
+      // 鼠标按下之后任何模式都会执行到这里结束
+      // console.clear()
+      // console.log('=====内部====')
+      // console.log(this.state.activeTool.type)
+      // console.log(hasDeselectedButton)
+      // console.log(event.buttons)
+      // event.buttons
+      // buttons 的值为各键对应值做与计算（+）后的值。
+      // 则值等于所有按键对应数值进行或 (|) 运算的结果。
+      // 例如，如果右键（2）和滚轮键（4）被同时按下，buttons 的值为 2 | 4 = 6
+      // 0: 没有按键或者是没有初始化
+      // 1: 鼠标左键
+      // 2: 鼠标右键
+      // 4: 鼠标滚轮或者是中键
+      // 8: 第四按键 (通常是“浏览器后退”按键)
+      // 16 : 第五按键 (通常是“浏览器前进”)
       return;
     }
+    // console.clear()
+    // console.log(hasDeselectedButton)
+    // console.log('===========外部')
+    // console.log(this.state.activeTool.type)
+    // console.log(event.buttons)
 
+    // 这里可以简单的看作 文本或橡皮差模式时，未按下，只是普通滚动，会导致move事件执行到这里
+    // 这里是所有画在界面上的元素的节点信息
     const elements = this.scene.getNonDeletedElements();
-
+    // console.clear()
+    // console.log(elements)
+    // 这里是被选中的节点信息
     const selectedElements = getSelectedElements(elements, this.state);
+    // console.clear()
+    // console.log(selectedElements)
     if (
       selectedElements.length === 1 &&
       !isOverScrollBar &&
@@ -3614,6 +3646,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     // only handle left mouse button or touch
+    // -1 代表的是pointermove事件的发生
     // 0 主按键  通常时鼠标左键
     // 1 辅助按键 鼠标滚轮中键
     // 2 次按键 鼠标右键

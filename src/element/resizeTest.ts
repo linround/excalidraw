@@ -43,7 +43,7 @@ export const resizeTest = (
     rotationTransformHandle &&
     isInsideTransformHandle(rotationTransformHandle, x, y)
   ) {
-    return "rotation" as TransformHandleType;
+    return "rotation";
   }
 
   const filter = Object.keys(transformHandles).filter((key) => {

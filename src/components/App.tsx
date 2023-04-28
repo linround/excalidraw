@@ -3269,7 +3269,7 @@ class App extends React.Component<AppProps, AppState> {
         this.state.zoom,
         event.pointerType,// mouse pen touch
       );
-      console.log(elementWithTransformHandleType)
+      // console.log(elementWithTransformHandleType)
       // elementWithTransformHandleType 的作用
       // 检查在选中框的8个方向上，是那个方向的拉伸操作
       if (

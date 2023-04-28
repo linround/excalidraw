@@ -231,6 +231,9 @@ export const getTransformHandles = (
   }
 
   let omitSides: { [T in TransformHandleType]?: boolean } = {};
+  // console.log(element.type,isLinearElement(element))
+  // 选中后自由变形拖拽 或者选中的是线条元素
+  // 自由变形 即选中了一个图像 可以进行拉伸
   if (element.type === "freedraw" || isLinearElement(element)) {
     if (element.points.length === 2) {
       // only check the last point because starting point is always (0,0)

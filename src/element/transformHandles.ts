@@ -233,9 +233,13 @@ export const getTransformHandles = (
   let omitSides: { [T in TransformHandleType]?: boolean } = {};
   // console.log(element.type,isLinearElement(element))
   // 选中后自由变形拖拽 或者选中的是线条元素
-  // 自由变形 即选中了一个图像 可以进行拉伸
+  // freedraw 即选中了一个自由绘制的线条 可以进行拉伸
   if (element.type === "freedraw" || isLinearElement(element)) {
     if (element.points.length === 2) {
+      // 对于只有两个点的选中元素
+      // 即是一个直线的元素
+      // console.clear()
+      // console.log(element)
       // only check the last point because starting point is always (0,0)
       const [, p1] = element.points;
       if (p1[0] === 0 || p1[1] === 0) {
@@ -251,19 +255,28 @@ export const getTransformHandles = (
       }
     }
   } else if (isTextElement(element)) {
+    // console.clear()
+    // console.log(element)
     omitSides = OMIT_SIDES_FOR_TEXT_ELEMENT;
   }
+  // console.log(isLinearElement(element))
+  // 计算虚线边距
   const dashedLineMargin = isLinearElement(element)
     ? DEFAULT_SPACING + 8
     : DEFAULT_SPACING;
-  return getTransformHandlesFromCoords(
+  const res = getTransformHandlesFromCoords(
     getElementAbsoluteCoords(element, true),
     element.angle,
     zoom,
     pointerType,
     omitSides,
     dashedLineMargin,
-  );
+  )
+  console.clear()
+  console.log(omitSides)
+  console.log(element)
+  console.log(res)
+  return res;
 };
 
 export const shouldShowBoundingBox = (

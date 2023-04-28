@@ -32,10 +32,10 @@ export const resizeTest = (
   zoom: Zoom,
   pointerType: PointerType,
 ): MaybeTransformHandleType => {
+  // console.log(appState.selectedElementIds)
   if (!appState.selectedElementIds[element.id]) {
     return false;
   }
-
   const { rotation: rotationTransformHandle, ...transformHandles } =
     getTransformHandles(element, zoom, pointerType);
 
@@ -61,6 +61,13 @@ export const resizeTest = (
 
   return false;
 };
+let r = [1,2,3].reduce((r,c)=>{
+  if(r) {
+    return r
+  }
+  return c
+},0)
+
 
 export const getElementWithTransformHandleType = (
   elements: readonly NonDeletedExcalidrawElement[],
@@ -70,6 +77,11 @@ export const getElementWithTransformHandleType = (
   zoom: Zoom,
   pointerType: PointerType,
 ) => {
+  // console.log(elements)
+  // 数组没有元素 没有初始值 会报错
+  // reduce 数组没有元素 有一个初始值 返回初始值
+  // 数组有一个元素 没有初始值  返回这一个元素
+  // 数组有一个元素 又初始值 返回相关逻辑
   return elements.reduce((result, element) => {
     if (result) {
       return result;

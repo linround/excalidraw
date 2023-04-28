@@ -3255,14 +3255,23 @@ class App extends React.Component<AppProps, AppState> {
       !isOverScrollBar &&
       !this.state.editingLinearElement
     ) {
+      // console.clear()
+      // console.log(selectedElements)
+      // console.log(elements)
+      // 没有按住拖拽平移键的时候的时候
+      // 有选中且只有一个选中时，这里的move事件执行
+      // console.log('!isOverScrollBar 1')
       const elementWithTransformHandleType = getElementWithTransformHandleType(
         elements,
         this.state,
         scenePointerX,
         scenePointerY,
         this.state.zoom,
-        event.pointerType,
+        event.pointerType,// mouse pen touch
       );
+      console.log(elementWithTransformHandleType)
+      // elementWithTransformHandleType 的作用
+      // 检查在选中框的8个方向上，是那个方向的拉伸操作
       if (
         elementWithTransformHandleType &&
         elementWithTransformHandleType.transformHandleType
@@ -3274,6 +3283,9 @@ class App extends React.Component<AppProps, AppState> {
         return;
       }
     } else if (selectedElements.length > 1 && !isOverScrollBar) {
+      // 没有按住拖拽平移键的时候的时候
+      // 并且勾选的是大于1个的时候
+      console.log('!isOverScrollBar 2')
       const transformHandleType = getTransformHandleTypeFromCoords(
         getCommonBounds(selectedElements),
         scenePointerX,
@@ -3282,6 +3294,7 @@ class App extends React.Component<AppProps, AppState> {
         event.pointerType,
       );
       if (transformHandleType) {
+        console.log('transformHandleType1')
         setCursor(
           this.canvas,
           getCursorForResizingElement({

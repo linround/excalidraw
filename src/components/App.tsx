@@ -3191,8 +3191,10 @@ class App extends React.Component<AppProps, AppState> {
 
       return;
     }
-
+    //选中取消事件
     const hasDeselectedButton = Boolean(event.buttons);
+    // buttons 为0 时表示没有按键
+    console.log(hasDeselectedButton,event.buttons)
     if (
       hasDeselectedButton ||
       (this.state.activeTool.type !== "selection" &&

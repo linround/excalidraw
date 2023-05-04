@@ -2592,6 +2592,9 @@ class App extends React.Component<AppProps, AppState> {
       opts?.includeBoundTextElement,
       opts?.includeLockedElements,
     );
+    // console.clear()
+    // console.log(allHitElements)
+    // console.log(opts)
     if (allHitElements.length > 1) {
       if (opts?.preferSelected) {
         for (let index = allHitElements.length - 1; index > -1; index--) {
@@ -2604,6 +2607,7 @@ class App extends React.Component<AppProps, AppState> {
         allHitElements[allHitElements.length - 1];
       // If we're hitting element with highest z-index only on its bounding box
       // while also hitting other element figure, the latter should be considered.
+      // console.log(elementWithHighestZIndex)
       return isHittingElementBoundingBoxWithoutHittingElement(
         elementWithHighestZIndex,
         this.state,
@@ -2625,6 +2629,7 @@ class App extends React.Component<AppProps, AppState> {
     includeBoundTextElement: boolean = false,
     includeLockedElements: boolean = false,
   ): NonDeleted<ExcalidrawElement>[] {
+    //   过滤出非文本 非锁定的元素
     const elements =
       includeBoundTextElement && includeLockedElements
         ? this.scene.getNonDeletedElements()
@@ -2636,7 +2641,8 @@ class App extends React.Component<AppProps, AppState> {
                 (includeBoundTextElement ||
                   !(isTextElement(element) && element.containerId)),
             );
-
+    // console.clear()
+  // console.log(elements)
     return getElementsAtPosition(elements, (element) =>
       hitTest(element, this.state, x, y),
     );
@@ -3290,7 +3296,7 @@ class App extends React.Component<AppProps, AppState> {
     } else if (selectedElements.length > 1 && !isOverScrollBar) {
       // 没有按住拖拽平移键的时候的时候
       // 并且勾选的是大于1个的时候
-      console.log('!isOverScrollBar 2')
+      // console.log('!isOverScrollBar 2')
       const transformHandleType = getTransformHandleTypeFromCoords(
         getCommonBounds(selectedElements),
         scenePointerX,
@@ -3299,7 +3305,8 @@ class App extends React.Component<AppProps, AppState> {
         event.pointerType,
       );
       if (transformHandleType) {
-        console.log('transformHandleType1')
+        // 这里是确定当选择多个对象时，需要对其进行的旋转操作 平移操作
+        // console.log('transformHandleType1：',transformHandleType)
         setCursor(
           this.canvas,
           getCursorForResizingElement({
@@ -3309,11 +3316,13 @@ class App extends React.Component<AppProps, AppState> {
         return;
       }
     }
-
+    // 这里的功能是从坐标点 获取对应的坐标元素
     const hitElement = this.getElementAtPosition(
       scenePointer.x,
       scenePointer.y,
     );
+    // console.clear()
+    // console.log(hitElement)
     this.hitLinkElement = this.getElementLinkAtPosition(
       scenePointer,
       hitElement,

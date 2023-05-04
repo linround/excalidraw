@@ -38,14 +38,20 @@ export const resizeTest = (
   }
   const { rotation: rotationTransformHandle, ...transformHandles } =
     getTransformHandles(element, zoom, pointerType);
-
+  // console.clear()
+  // 旋转点坐标
+  // console.log(rotationTransformHandle)
+  // 其他拉伸点坐标
+  // console.log(transformHandles)
   if (
     rotationTransformHandle &&
     isInsideTransformHandle(rotationTransformHandle, x, y)
   ) {
+    // 只有是旋转操作的时候才会出发到这里
     return "rotation";
   }
-
+  // 这个filter记录的是鼠标点实在哪个拉伸坐标点附近
+  // 比如 e w  s n  sw等值
   const filter = Object.keys(transformHandles).filter((key) => {
     const transformHandle =
       transformHandles[key as Exclude<TransformHandleType, "rotation">]!;
@@ -54,7 +60,8 @@ export const resizeTest = (
     }
     return isInsideTransformHandle(transformHandle, x, y);
   });
-
+  // console.clear()
+  // console.log(filter)
   if (filter.length > 0) {
     return filter[0] as TransformHandleType;
   }
@@ -94,6 +101,10 @@ export const getElementWithTransformHandleType = (
       zoom,
       pointerType,
     );
+    // console.log(transformHandleType)
+    // transformHandleType 记录的是鼠标点的某个操作动作
+    // transformHandleType = 'e' 向东拉伸
+    // transformHandleType = 'rotation' 旋转操作
     return transformHandleType ? { element, transformHandleType } : null;
   }, null as { element: NonDeletedExcalidrawElement; transformHandleType: MaybeTransformHandleType } | null);
 };

@@ -3323,11 +3323,17 @@ class App extends React.Component<AppProps, AppState> {
     );
     // console.clear()
     // console.log(hitElement)
+    // 这里的hitLink也是会在canvas中进行渲染的
+    // 在这里监测该坐标点是否是链接元素
     this.hitLinkElement = this.getElementLinkAtPosition(
       scenePointer,
       hitElement,
     );
+    // console.clear()
+    // console.log(this.hitLinkElement)
     if (isEraserActive(this.state)) {
+    //   只有橡皮擦模式下才会执行到这里
+    // console.log('isEraserActive')
       return;
     }
     if (

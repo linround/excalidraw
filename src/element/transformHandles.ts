@@ -272,10 +272,13 @@ export const getTransformHandles = (
     omitSides,
     dashedLineMargin,
   )
-  console.clear()
-  console.log(omitSides)
-  console.log(element)
-  console.log(res)
+  // console.clear()
+  // 这个是确定有哪些方向点的对象
+  // console.log(omitSides)
+  // 这个是会被拖拽的元素
+  // console.log(element)
+  // 这个是各方向拉伸点坐标
+  // console.log(res)
   return res;
 };
 

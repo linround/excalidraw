@@ -67,16 +67,25 @@ export const hitTest = (
   // How many pixels off the shape boundary we still consider a hit
   const threshold = 10 / appState.zoom.value;
   const point: Point = [x, y];
-
+  // console.clear()
+  // console.log(element)
+  // console.log(isElementSelected(appState, element))
+  // console.log(shouldShowBoundingBox([element], appState))
+  // console.log(appState.selectedElementIds)
   if (
     isElementSelected(appState, element) &&
     shouldShowBoundingBox([element], appState)
   ) {
+    console.log('************')
     return isPointHittingElementBoundingBox(element, point, threshold);
   }
 
   const boundTextElement = getBoundTextElement(element);
+  // console.clear()
+  // console.log(boundTextElement)
   if (boundTextElement) {
+    // 这里的触发条件暂时不知道
+    debugger
     const isHittingBoundTextElement = hitTest(boundTextElement, appState, x, y);
     if (isHittingBoundTextElement) {
       return true;

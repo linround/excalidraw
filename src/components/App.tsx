@@ -2642,7 +2642,7 @@ class App extends React.Component<AppProps, AppState> {
                   !(isTextElement(element) && element.containerId)),
             );
     // console.clear()
-  // console.log(elements)
+    // console.log(elements)
     return getElementsAtPosition(elements, (element) =>
       hitTest(element, this.state, x, y),
     );

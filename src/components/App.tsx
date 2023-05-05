@@ -3340,9 +3340,16 @@ class App extends React.Component<AppProps, AppState> {
       this.hitLinkElement &&
       !this.state.selectedElementIds[this.hitLinkElement.id]
     ) {
+      // 这里鼠标位置在链接处即会执行
+      // console.clear()
+      // console.log(this.hitLinkElement,'hitLinkElement')
+      // console.log(this.state.selectedElementIds,'selectedElementIds')
       setCursor(this.canvas, CURSOR_TYPE.POINTER);
+      // 这里会展示链接的详情信息
       showHyperlinkTooltip(this.hitLinkElement, this.state);
     } else {
+      // 这里会隐藏链接详情
+      // console.log('hideHyperlinkToolip')
       hideHyperlinkToolip();
       if (
         hitElement &&

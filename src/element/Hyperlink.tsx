@@ -383,21 +383,24 @@ const renderTooltip = (
   if (!element.link) {
     return;
   }
-
+  // 创建一个div
   const tooltipDiv = getTooltipDiv();
 
   tooltipDiv.classList.add("excalidraw-tooltip--visible");
   tooltipDiv.style.maxWidth = "20rem";
   tooltipDiv.textContent = element.link;
+  // console.clear()
+  // console.log(element)
+  // 得到元素的绝对坐标点通常都是四个点即可
 
   const [x1, y1, x2, y2] = getElementAbsoluteCoords(element);
-
+  // 链接的坐标点通常在四个角中的某一个
   const [linkX, linkY, linkWidth, linkHeight] = getLinkHandleFromCoords(
     [x1, y1, x2, y2],
     element.angle,
     appState,
   );
-
+  // 最终计算链接的位置信息
   const linkViewportCoords = sceneCoordsToViewportCoords(
     { sceneX: linkX, sceneY: linkY },
     appState,

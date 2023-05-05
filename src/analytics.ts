@@ -11,7 +11,6 @@ export const trackEvent = (
     if (typeof window === "undefined" || process.env.JEST_WORKER_ID) {
       return;
     }
-
     if (process.env.REACT_APP_GOOGLE_ANALYTICS_ID && window.gtag) {
       window.gtag("event", action, {
         event_category: category,

@@ -528,8 +528,7 @@ class App extends React.Component<AppProps, AppState> {
           onPointerUp={this.handleCanvasPointerUp}
           onPointerCancel={this.removePointer}
           onTouchMove={this.handleTouchMove}
-          onPointerDown={this.handleCanvasPointerDown}
-        >
+          onPointerDown={this.handleCanvasPointerDown}>
           {t("labels.drawingCanvas")}
         </canvas>
       );
@@ -3358,8 +3357,15 @@ class App extends React.Component<AppProps, AppState> {
         !this.state.contextMenu &&
         !this.state.showHyperlinkPopup
       ) {
+        // debugger
+        // alert('hitElement')
         this.setState({ showHyperlinkPopup: "info" });
       } else if (this.state.activeTool.type === "text") {
+        // debugger
+        // console.clear()
+        // 这里只要是text操作 就会触发这里的事件
+        // console.log('setState')
+        // alert('type == text')
         setCursor(
           this.canvas,
           isTextElement(hitElement) ? CURSOR_TYPE.TEXT : CURSOR_TYPE.CROSSHAIR,
@@ -3367,8 +3373,16 @@ class App extends React.Component<AppProps, AppState> {
       } else if (this.state.viewModeEnabled) {
         setCursor(this.canvas, CURSOR_TYPE.GRAB);
       } else if (isOverScrollBar) {
+        // console.clear()
+        // console.log('isOverScrollBar')
         setCursor(this.canvas, CURSOR_TYPE.AUTO);
       } else if (this.state.selectedLinearElement) {
+        // console.clear()
+        // console.log('selectedLinearElement')
+        // 选中线条元素时，可能是
+        // 平移线条
+        // 直线拉伸
+        // 曲线拉伸
         this.handleHoverSelectedLinearElement(
           this.state.selectedLinearElement,
           scenePointerX,
@@ -3378,6 +3392,7 @@ class App extends React.Component<AppProps, AppState> {
         // if using cmd/ctrl, we're not dragging
         !event[KEYS.CTRL_OR_CMD]
       ) {
+        // 按住ctrl时，避免发生拖拽，从而只是进行选中
         if (
           (hitElement ||
             this.isHittingCommonBoundingBoxOfSelectedElements(
@@ -3827,8 +3842,13 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerUp = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
+    // 这里记录下上一次松开时的坐标点
+    // 暂时作用位未知
     this.lastPointerUp = event;
     if (this.device.isTouchScreen) {
+      // alert('isTouchScreen')
+      // 对于移动端就会出现执行
+      // 将事件触发的左边转换为对应的场景坐标
       const scenePointer = viewportCoordsToSceneCoords(
         { clientX: event.clientX, clientY: event.clientY },
         this.state,
@@ -3837,6 +3857,9 @@ class App extends React.Component<AppProps, AppState> {
         scenePointer.x,
         scenePointer.y,
       );
+      // console.clear()
+      // console.log(hitElement)
+      // 从场景坐标获取到对应的选中元素
       this.hitLinkElement = this.getElementLinkAtPosition(
         scenePointer,
         hitElement,

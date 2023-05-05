@@ -16,6 +16,7 @@ import MainMenu from "../../components/main-menu/MainMenu";
 import WelcomeScreen from "../../components/welcome-screen/WelcomeScreen";
 import LiveCollaborationTrigger from "../../components/live-collaboration/LiveCollaborationTrigger";
 
+
 const ExcalidrawBase = (props: ExcalidrawProps) => {
   const {
     onChange,

@@ -807,9 +807,13 @@ const renderSceneThrottled = throttleRAF(
   },
   { trailing: true },
 );
+function identity<T>(arg: T): T extends false ? number : string{
+  return arg as T extends false ? number:string;
+}
+const a = identity(false)
 
 /** renderScene throttled to animation framerate */
-export const renderScene = <T extends boolean = false>(
+export const renderScene = <T extends boolean>(
   config: {
     elements: readonly NonDeletedExcalidrawElement[];
     appState: AppState;
@@ -824,6 +828,7 @@ export const renderScene = <T extends boolean = false>(
   throttle?: T,
 ): T extends true ? void : ReturnType<typeof _renderScene> => {
   if (throttle) {
+    // console.log('renderSceneThrottled')
     renderSceneThrottled(config);
     return undefined as T extends true ? void : ReturnType<typeof _renderScene>;
   }

@@ -512,6 +512,19 @@ class App extends React.Component<AppProps, AppState> {
     const canvasWidth = canvasDOMWidth * canvasScale;
     const canvasHeight = canvasDOMHeight * canvasScale;
     if (viewModeEnabled) {
+      // 移动端触发
+      // handleCanvasPointerDown->
+      // handleCanvasPointerMove->
+      // handleTouchMove->
+      // handleCanvasPointerUp->
+      // removePointer
+
+
+      // PC端触发
+      // handleCanvasPointerDown->
+      // handleCanvasPointerMove->
+      // handleCanvasPointerUp->
+      // removePointer
       return (
         <canvas
           className="excalidraw__canvas"
@@ -1289,6 +1302,8 @@ class App extends React.Component<AppProps, AppState> {
         ),
       );
     }
+    // update 每次state更新都会渲染
+    // console.log('update')
     this.renderScene();
     this.history.record(this.state, this.scene.getElementsIncludingDeleted());
 
@@ -1366,8 +1381,8 @@ class App extends React.Component<AppProps, AppState> {
     const selectionColor = getComputedStyle(
       document.querySelector(".excalidraw")!,
     ).getPropertyValue("--color-selection");
-
-    renderScene(
+    // console.log(renderingElements)
+    const r = renderScene(
       {
         elements: renderingElements,
         appState: this.state,
@@ -1409,7 +1424,7 @@ class App extends React.Component<AppProps, AppState> {
       },
       THROTTLE_NEXT_RENDER && window.EXCALIDRAW_THROTTLE_RENDER === true,
     );
-
+    console.log('r:',r)
     if (!THROTTLE_NEXT_RENDER) {
       THROTTLE_NEXT_RENDER = true;
     }
@@ -1810,7 +1825,7 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   removePointer = (event: React.PointerEvent<HTMLElement> | PointerEvent) => {
-    alert('removePointer')
+    // console.log('removePointer')
     if (touchTimeout) {
       this.resetContextMenuTimer();
     }
@@ -2988,7 +3003,7 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerMove = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
-alert('handleCanvasPointerMove')
+    // console.log('handleCanvasPointerMove')
     this.savePointer(event.clientX, event.clientY, this.state.cursorButton);
 
     if (gesture.pointers.has(event.pointerId)) {
@@ -3085,7 +3100,7 @@ alert('handleCanvasPointerMove')
       this.state.editingLinearElement &&
       !this.state.editingLinearElement.isDragging
     ) {
-      alert('!editingLinearElement.isDragging')
+      console.log('!editingLinearElement.isDragging')
       const editingLinearElement = LinearElementEditor.handlePointerMove(
         event,
         scenePointerX,
@@ -3504,7 +3519,7 @@ alert('handleCanvasPointerMove')
   };
   // set touch moving for mobile context menu
   private handleTouchMove = (event: React.TouchEvent<HTMLCanvasElement>) => {
-    alert('handleTouchMove')
+    // console.log('handleTouchMove')
     invalidateContextMenu = true;
   };
 
@@ -3597,7 +3612,7 @@ alert('handleCanvasPointerMove')
   private handleCanvasPointerDown = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
-    alert('handleCanvasPointerDown')
+    // console.log('handleCanvasPointerDown')
     // since contextMenu options are potentially evaluated on each render,
     // and an contextMenu action may depend on selection state, we must
     // close the contextMenu before we update the selection on pointerDown
@@ -3749,7 +3764,7 @@ alert('handleCanvasPointerMove')
       this.state.activeTool.type === "image";
     // 这里的触发条件暂不清晰
     if (!allowOnPointerDown) {
-      alert('allowOnPointerDown')
+      console.log('allowOnPointerDown')
       return;
     }
 
@@ -3847,7 +3862,7 @@ alert('handleCanvasPointerMove')
   private handleCanvasPointerUp = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
-    alert('handleCanvasPointerUp')
+    // console.log('handleCanvasPointerUp')
     // 这里记录下上一次松开时的坐标点
     // 暂时作用位未知
     this.lastPointerUp = event;
@@ -6198,6 +6213,7 @@ alert('handleCanvasPointerMove')
       // console.log('element canvas')
       this.canvas = canvas;
       this.rc = rough.canvas(this.canvas);
+      // console.log(this.rc)
 
       this.canvas.addEventListener(EVENT.WHEEL, this.handleWheel, {
         passive: false, //一个布尔值，设置为 true 时，表示 listener 永远不会调用 preventDefault()。
@@ -6336,7 +6352,7 @@ alert('handleCanvasPointerMove')
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
     event.preventDefault();
-    alert('handleCanvasContextMenu')
+    // console.log('handleCanvasContextMenu')
     if (
       (event.nativeEvent.pointerType === "touch" ||
         (event.nativeEvent.pointerType === "pen" &&

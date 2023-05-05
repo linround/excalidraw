@@ -1810,7 +1810,7 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   removePointer = (event: React.PointerEvent<HTMLElement> | PointerEvent) => {
-
+    alert('removePointer')
     if (touchTimeout) {
       this.resetContextMenuTimer();
     }
@@ -2988,7 +2988,7 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerMove = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
-
+alert('handleCanvasPointerMove')
     this.savePointer(event.clientX, event.clientY, this.state.cursorButton);
 
     if (gesture.pointers.has(event.pointerId)) {
@@ -3504,7 +3504,7 @@ class App extends React.Component<AppProps, AppState> {
   };
   // set touch moving for mobile context menu
   private handleTouchMove = (event: React.TouchEvent<HTMLCanvasElement>) => {
-
+    alert('handleTouchMove')
     invalidateContextMenu = true;
   };
 
@@ -3597,6 +3597,7 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerDown = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
+    alert('handleCanvasPointerDown')
     // since contextMenu options are potentially evaluated on each render,
     // and an contextMenu action may depend on selection state, we must
     // close the contextMenu before we update the selection on pointerDown
@@ -3846,6 +3847,7 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasPointerUp = (
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
+    alert('handleCanvasPointerUp')
     // 这里记录下上一次松开时的坐标点
     // 暂时作用位未知
     this.lastPointerUp = event;
@@ -6334,7 +6336,7 @@ class App extends React.Component<AppProps, AppState> {
     event: React.PointerEvent<HTMLCanvasElement>,
   ) => {
     event.preventDefault();
-
+    alert('handleCanvasContextMenu')
     if (
       (event.nativeEvent.pointerType === "touch" ||
         (event.nativeEvent.pointerType === "pen" &&

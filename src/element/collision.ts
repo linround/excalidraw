@@ -84,7 +84,7 @@ export const hitTest = (
   // console.log(boundTextElement)
   if (boundTextElement) {
     // 这里的触发条件暂时不知道
-    debugger
+    // debugger
     const isHittingBoundTextElement = hitTest(boundTextElement, appState, x, y);
     if (isHittingBoundTextElement) {
       return true;

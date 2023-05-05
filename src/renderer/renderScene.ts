@@ -807,11 +807,17 @@ const renderSceneThrottled = throttleRAF(
   },
   { trailing: true },
 );
-function identity<T>(arg: T): T extends false ? number : string{
-  return arg as T extends false ? number:string;
+function identity<T>(arg: T): T extends true ? number : string{
+  return arg as T extends true ? number:string;
 }
-const a = identity(false)
-
+const a = identity(true)
+interface m {
+test:string
+}
+interface n extends m {}
+let mm:m = {
+  test:''
+}
 /** renderScene throttled to animation framerate */
 export const renderScene = <T extends boolean>(
   config: {

@@ -1464,6 +1464,8 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   private onTapStart = (event: TouchEvent) => {
+    // console.log('onTapStart')
+    // 移动端执行 touchStart
     // fix for Apple Pencil Scribble
     // On Android, preventing the event would disable contextMenu on tap-hold
     if (!isAndroid) {
@@ -1503,6 +1505,8 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   private onTapEnd = (event: TouchEvent) => {
+    // console.log('onTapEnd')
+    // 移动端执行，松开操作
     this.resetContextMenuTimer();
     if (event.touches.length > 0) {
       this.setState({
@@ -6188,15 +6192,20 @@ class App extends React.Component<AppProps, AppState> {
   private handleCanvasRef = (canvas: HTMLCanvasElement) => {
     // canvas is null when unmounting
     if (canvas !== null) {
+      // console.clear()
+      // console.log('element canvas')
       this.canvas = canvas;
       this.rc = rough.canvas(this.canvas);
 
       this.canvas.addEventListener(EVENT.WHEEL, this.handleWheel, {
-        passive: false,
+        passive: false, //一个布尔值，设置为 true 时，表示 listener 永远不会调用 preventDefault()。
+        // 如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告
       });
       this.canvas.addEventListener(EVENT.TOUCH_START, this.onTapStart);
       this.canvas.addEventListener(EVENT.TOUCH_END, this.onTapEnd);
     } else {
+      console.clear()
+      console.log('null canvas')
       this.canvas?.removeEventListener(EVENT.WHEEL, this.handleWheel);
       this.canvas?.removeEventListener(EVENT.TOUCH_START, this.onTapStart);
       this.canvas?.removeEventListener(EVENT.TOUCH_END, this.onTapEnd);

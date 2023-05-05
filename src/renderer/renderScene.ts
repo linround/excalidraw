@@ -807,10 +807,10 @@ const renderSceneThrottled = throttleRAF(
   },
   { trailing: true },
 );
-function identity<T>(arg: T): T extends true ? number : string{
-  return arg as T extends true ? number:string;
+function identity<T>(arg: T): T extends '100' ? number : string{
+  return arg as T extends '100' ? number:string;
 }
-const a = identity(true)
+const a = identity('100')
 interface m {
 test:string
 }

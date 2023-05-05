@@ -28,6 +28,7 @@ export const trackEvent = (
     }
 
     if (window.fathom) {
+      // 这是一种埋点方式
       window.fathom.trackEvent(action, {
         category,
         label,

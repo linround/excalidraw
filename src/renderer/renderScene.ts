@@ -803,6 +803,7 @@ const renderSceneThrottled = throttleRAF(
     callback?: (data: ReturnType<typeof _renderScene>) => void;
   }) => {
     const ret = _renderScene(config);
+    console.log(ret)
     config.callback?.(ret);
   },
   { trailing: true },
@@ -835,6 +836,8 @@ export const renderScene = <T extends boolean>(
 ): T extends true ? void : ReturnType<typeof _renderScene> => {
   if (throttle) {
     // console.log('renderSceneThrottled')
+    // console.clear()
+    // console.log(config)
     renderSceneThrottled(config);
     return undefined as T extends true ? void : ReturnType<typeof _renderScene>;
   }

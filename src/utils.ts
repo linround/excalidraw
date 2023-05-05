@@ -132,6 +132,7 @@ export const throttleRAF = <T extends any[]>(
   fn: (...args: T) => void,
   opts?: { trailing?: boolean },
 ) => {
+  // 首先这里会调用生成一个函数
   let timerId: number | null = null;
   let lastArgs: T | null = null;
   let lastArgsTrailing: T | null = null;
@@ -148,7 +149,7 @@ export const throttleRAF = <T extends any[]>(
       }
     });
   };
-
+  // 一开始的时候会返回这个ret函数
   const ret = (...args: T) => {
     if (process.env.NODE_ENV === "test") {
       fn(...args);

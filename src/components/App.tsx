@@ -1424,7 +1424,7 @@ class App extends React.Component<AppProps, AppState> {
       },
       THROTTLE_NEXT_RENDER && window.EXCALIDRAW_THROTTLE_RENDER === true,
     );
-    console.log('r:',r)
+    // console.log('r:',r)
     if (!THROTTLE_NEXT_RENDER) {
       THROTTLE_NEXT_RENDER = true;
     }

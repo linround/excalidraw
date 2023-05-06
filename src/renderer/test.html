@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<style>
+  #some-element-you-want-to-animate{
+    border: 1px solid black;
+    width: 50px;
+    height: 50px;
+    background: #3d3d3d;
+  }
+</style>
+<body>
+  <div id="some-element-you-want-to-animate">
+
+  </div>
+</body>
+</html>
+<script>
+  const element = document.getElementById("some-element-you-want-to-animate");
+  let start, previousTimeStamp;
+  let done = false;
+
+  function step(timestamp) {
+    if (start === undefined) {
+      start = timestamp;
+    }
+    // elapsed 这里计算的时从动画开始时的时间，到此刻执行动画的事件差
+    // timestamp 时每次动画执行时的时间
+    // previousTimeStamp 是上一次动画执行时的时间 所以刚开始的时候时undefined
+    const elapsed = timestamp - start;
+    // console.log(elapsed,previousTimeStamp,timestamp,previousTimeStamp !== timestamp)
+
+    if (previousTimeStamp !== timestamp) {
+      // 这里使用 Math.min() 确保元素在恰好位于 200px 时停止运动
+      // 使用math.min从而得到最终的200的值
+      const count = Math.min(0.1 * elapsed, 200);
+      element.style.transform = `translateX(${count}px)`;
+      console.log(count,elapsed)
+      if (count === 200) done = true;
+    }
+
+    if (elapsed < 2000) {
+      // 2 秒之后停止动画
+      previousTimeStamp = timestamp;
+      if (!done) {
+        window.requestAnimationFrame(step);
+      }
+    }
+  }
+
+  window.requestAnimationFrame(step);
+
+</script>

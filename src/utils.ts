@@ -142,6 +142,9 @@ export const throttleRAF = <T extends any[]>(
   const scheduleFunc = (args: T) => {
 
     console.log(3)
+    // requestAnimationFrame
+    // 告诉浏览器，希望执行一个动画，并且要求在下次重绘之前调用指定的回调函数更新动画
+    // 通过传入一个回调函数，该回调函数会在浏览器下一次重绘之前执行
     timerId = window.requestAnimationFrame(() => {
       console.log(4)
       timerId = null;
@@ -162,9 +165,8 @@ export const throttleRAF = <T extends any[]>(
       return;
     }
     lastArgs = args;
-    scheduleFunc(lastArgs);
     if (timerId === null) {
-
+      scheduleFunc(lastArgs);
     } else if (opts?.trailing) {
       lastArgsTrailing = args;
     }

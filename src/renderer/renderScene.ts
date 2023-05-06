@@ -803,7 +803,7 @@ const renderSceneThrottled = throttleRAF(
     callback?: (data: ReturnType<typeof _renderScene>) => void;
   }) => {
     const ret = _renderScene(config);
-    console.log(ret)
+    // console.log(ret)
     config.callback?.(ret);
   },
   { trailing: true },

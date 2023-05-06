@@ -136,9 +136,14 @@ export const throttleRAF = <T extends any[]>(
   let timerId: number | null = null;
   let lastArgs: T | null = null;
   let lastArgsTrailing: T | null = null;
-
+  // console.clear()
+  // 这里会执行一次以便生成对应的函数
+  // console.log(1)
   const scheduleFunc = (args: T) => {
+
+    console.log(3)
     timerId = window.requestAnimationFrame(() => {
+      console.log(4)
       timerId = null;
       fn(...args);
       lastArgs = null;
@@ -151,13 +156,15 @@ export const throttleRAF = <T extends any[]>(
   };
   // 一开始的时候会返回这个ret函数
   const ret = (...args: T) => {
+    console.log(2)
     if (process.env.NODE_ENV === "test") {
       fn(...args);
       return;
     }
     lastArgs = args;
+    scheduleFunc(lastArgs);
     if (timerId === null) {
-      scheduleFunc(lastArgs);
+
     } else if (opts?.trailing) {
       lastArgsTrailing = args;
     }

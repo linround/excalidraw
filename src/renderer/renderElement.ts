@@ -462,18 +462,22 @@ const generateElementShape = (
   generator: RoughGenerator,
 ) => {
   let shape = shapeCache.get(element);
+  console.clear()
+  console.log(element.type)
+  console.log(shape,element)
 
   // `null` indicates no rc shape applicable for this element type
   // (= do not generate anything)
   if (shape === undefined) {
     elementWithCanvasCache.delete(element);
-
     switch (element.type) {
+      // 矩形
       case "rectangle":
         if (element.roundness) {
           const w = element.width;
           const h = element.height;
           const r = getCornerRadius(Math.min(w, h), element);
+          console.log(r)
           shape = generator.path(
             `M ${r} 0 L ${w - r} 0 Q ${w} 0, ${w} ${r} L ${w} ${
               h - r
@@ -494,6 +498,7 @@ const generateElementShape = (
         setShapeForElement(element, shape);
 
         break;
+      //   棱形
       case "diamond": {
         const [topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY] =
           getDiamondPoints(element);
@@ -544,6 +549,7 @@ const generateElementShape = (
 
         break;
       }
+      // 椭圆
       case "ellipse":
         shape = generator.ellipse(
           element.width / 2,
@@ -895,14 +901,18 @@ export const renderElement = (
   appState: AppState,
 ) => {
   const generator = rc.generator;
+  // console.clear()
+  // console.log(element.type)
   switch (element.type) {
     case "selection": {
+      // 保存上一次的状态信息
       context.save();
+      // 平移操作
       context.translate(
         element.x + renderConfig.scrollX,
         element.y + renderConfig.scrollY,
       );
-      context.fillStyle = "rgba(0, 0, 200, 0.04)";
+      context.fillStyle = "red";
 
       // render from 0.5px offset  to get 1px wide line
       // https://stackoverflow.com/questions/7530593/html5-canvas-and-line-width/7531540#7531540
@@ -913,6 +923,7 @@ export const renderElement = (
       context.fillRect(offset, offset, element.width, element.height);
       context.lineWidth = 1 / renderConfig.zoom.value;
       context.strokeStyle = "rgb(105, 101, 219)";
+      context.fillStyle='blue'
       context.strokeRect(offset, offset, element.width, element.height);
 
       context.restore();

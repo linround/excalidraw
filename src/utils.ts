@@ -141,12 +141,12 @@ export const throttleRAF = <T extends any[]>(
   // console.log(1)
   const scheduleFunc = (args: T) => {
 
-    console.log(3)
+    // console.log(3)
     // requestAnimationFrame
     // 告诉浏览器，希望执行一个动画，并且要求在下次重绘之前调用指定的回调函数更新动画
     // 通过传入一个回调函数，该回调函数会在浏览器下一次重绘之前执行
     timerId = window.requestAnimationFrame(() => {
-      console.log(4)
+      // console.log(4)
       timerId = null;
       fn(...args);
       lastArgs = null;
@@ -159,7 +159,7 @@ export const throttleRAF = <T extends any[]>(
   };
   // 一开始的时候会返回这个ret函数
   const ret = (...args: T) => {
-    console.log(2)
+    // console.log(2)
     if (process.env.NODE_ENV === "test") {
       fn(...args);
       return;

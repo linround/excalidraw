@@ -353,6 +353,7 @@ export const _renderScene = ({
     const normalizedCanvasHeight = canvas.height / scale;
 
     if (isExporting && renderConfig.theme === "dark") {
+      debugger
       context.filter = THEME_FILTER;
     }
 
@@ -373,12 +374,13 @@ export const _renderScene = ({
     } else {
       context.clearRect(0, 0, normalizedCanvasWidth, normalizedCanvasHeight);
     }
-
     // Apply zoom
     context.save();
     context.scale(renderConfig.zoom.value, renderConfig.zoom.value);
 
     // Grid
+    // console.clear()
+    // console.log('renderGrid:',renderGrid,appState.gridSize)
     if (renderGrid && appState.gridSize) {
       strokeGrid(
         context,
@@ -395,6 +397,7 @@ export const _renderScene = ({
     }
 
     // Paint visible elements
+    // 可见的元素
     const visibleElements = elements.filter((element) =>
       isVisibleElement(element, normalizedCanvasWidth, normalizedCanvasHeight, {
         zoom: renderConfig.zoom,
@@ -407,6 +410,7 @@ export const _renderScene = ({
 
     let editingLinearElement: NonDeleted<ExcalidrawLinearElement> | undefined =
       undefined;
+    //
     visibleElements.forEach((element) => {
       try {
         renderElement(element, rc, context, renderConfig, appState);
@@ -437,6 +441,7 @@ export const _renderScene = ({
     }
 
     // Paint selection element
+    // 正在选中的元素
     if (appState.selectionElement) {
       try {
         renderElement(
@@ -451,6 +456,10 @@ export const _renderScene = ({
       }
     }
 
+    // console.clear()
+    // console.log('visibleElements',visibleElements)
+    // console.log('editingLinearElement',editingLinearElement)
+    // console.log('appState.selectionElement',appState.selectionElement)
     if (isBindingEnabled(appState)) {
       appState.suggestedBindings
         .filter((binding) => binding != null)
@@ -458,8 +467,10 @@ export const _renderScene = ({
           renderBindingHighlight(context, renderConfig, suggestedBinding!);
         });
     }
+    // 选中的元素
     const locallySelectedElements = getSelectedElements(elements, appState);
 
+    // console.log('locallySelectedElements',locallySelectedElements)
     // Getting the element using LinearElementEditor during collab mismatches version - being one head of visible elements due to
     // ShapeCache returns empty hence making sure that we get the
     // correct element from visible elements
